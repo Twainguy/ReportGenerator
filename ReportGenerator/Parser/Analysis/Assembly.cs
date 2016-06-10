@@ -74,7 +74,7 @@ namespace Palmmedia.ReportGenerator.Parser.Analysis
         /// Gets the coverage quota of the class.
         /// </summary>
         /// <value>The coverage quota.</value>
-        public decimal? CoverageQuota => (this.CoverableLines == 0) ? (decimal?)null : (decimal)Math.Truncate(1000 * (double)this.CoveredLines / (double)this.CoverableLines) / 10;
+        public decimal? CoverageQuota => (this.CoverableLines == 0) ? (decimal?)null : (decimal)Math.Round(1000 * (double)this.CoveredLines / (double)this.CoverableLines) / 10;
 
         /// <summary>
         /// Gets the number of covered branches.
@@ -96,7 +96,7 @@ namespace Palmmedia.ReportGenerator.Parser.Analysis
         /// Gets the branch coverage quota of the class.
         /// </summary>
         /// <value>The branch coverage quota.</value>
-        public decimal? BranchCoverageQuota => (this.TotalBranches == 0) ? (decimal?)null : (decimal)Math.Truncate(1000 * (double)this.CoveredBranches / (double)this.TotalBranches) / 10;
+        public decimal? BranchCoverageQuota => (this.TotalBranches == 0) ? (decimal?)null : (decimal)Math.Round(1000 * (double)this.CoveredBranches / (double)this.TotalBranches) / 10;
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object"/> is equal to this instance.

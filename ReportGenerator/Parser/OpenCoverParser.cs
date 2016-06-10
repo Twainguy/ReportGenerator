@@ -343,6 +343,7 @@ namespace Palmmedia.ReportGenerator.Parser
 
                 foreach (var seqpnt in seqpntsOfFile)
                 {
+                    var lineNumber = seqpnt.LineNumberStart;
                     int visits = coverage[lineNumber] == -1 ? seqpnt.Visits : coverage[lineNumber] + seqpnt.Visits;
                     coverage[lineNumber] = visits;
 
@@ -406,7 +407,7 @@ namespace Palmmedia.ReportGenerator.Parser
 
             int visitedMethods = methodGroups.Count(g => g.Any(m => m.Attribute("visited").Value == "true"));
 
-            return (methodGroups.Length == 0) ? (decimal?)null : (decimal)Math.Truncate(1000 * (double)visitedMethods / (double)methodGroups.Length) / 10;
+            return (methodGroups.Length == 0) ? (decimal?)null : (decimal)Math.Round(1000 * (double)visitedMethods / (double)methodGroups.Length) / 10;
         }
     }
 }

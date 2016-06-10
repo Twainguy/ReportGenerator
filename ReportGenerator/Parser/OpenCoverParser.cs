@@ -343,27 +343,24 @@ namespace Palmmedia.ReportGenerator.Parser
 
                 foreach (var seqpnt in seqpntsOfFile)
                 {
-                    for (int lineNumber = seqpnt.LineNumberStart; lineNumber <= seqpnt.LineNumberEnd; lineNumber++)
-                    {
-                        int visits = coverage[lineNumber] == -1 ? seqpnt.Visits : coverage[lineNumber] + seqpnt.Visits;
-                        coverage[lineNumber] = visits;
+                    int visits = coverage[lineNumber] == -1 ? seqpnt.Visits : coverage[lineNumber] + seqpnt.Visits;
+                    coverage[lineNumber] = visits;
 
-                        if (visits > -1)
+                    if (visits > -1)
+                    {
+                        foreach (var trackedMethodCoverage in trackedMethodsCoverage)
                         {
-                            foreach (var trackedMethodCoverage in trackedMethodsCoverage)
+                            if (trackedMethodCoverage.Value[lineNumber] == -1)
                             {
-                                if (trackedMethodCoverage.Value[lineNumber] == -1)
-                                {
-                                    trackedMethodCoverage.Value[lineNumber] = 0;
-                                }
+                                trackedMethodCoverage.Value[lineNumber] = 0;
                             }
                         }
+                    }
 
-                        foreach (var trackedMethod in seqpnt.TrackedMethodRefs)
-                        {
-                            var trackedMethodCoverage = trackedMethodsCoverage[trackedMethod.TrackedMethodId];
-                            trackedMethodCoverage[lineNumber] = trackedMethodCoverage[lineNumber] == -1 ? trackedMethod.Visits : trackedMethodCoverage[lineNumber] + trackedMethod.Visits;
-                        }
+                    foreach (var trackedMethod in seqpnt.TrackedMethodRefs)
+                    {
+                        var trackedMethodCoverage = trackedMethodsCoverage[trackedMethod.TrackedMethodId];
+                        trackedMethodCoverage[lineNumber] = trackedMethodCoverage[lineNumber] == -1 ? trackedMethod.Visits : trackedMethodCoverage[lineNumber] + trackedMethod.Visits;
                     }
                 }
             }
